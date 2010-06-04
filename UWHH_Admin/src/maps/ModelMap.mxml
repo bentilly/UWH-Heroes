@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="http://mate.asfusion.com/">
+	
+	<mx:Script>
+		<![CDATA[
+			import view.team.newTeamTW;
+			import view.team.teamPage;
+			import view.tournament.tournamentPage;
+			import view.person.personPage;
+			import view.lists.*;
+			import business.*;
+			import view.*;
+
+		]]>
+	</mx:Script>
+	
+	<!--<Injectors target="{gibbon}">
+		<PropertyInjector targetKey="isAdmin" source="{UserInfoManager}" sourceKey="isAdmin"/>
+	</Injectors>-->
+	
+<!-- LISTS -->
+	<Injectors target="{divisionList}">
+		<PropertyInjector targetKey="divisionListData" source="{ListsManager}" sourceKey="divisionListData"/>
+	</Injectors>
+	<Injectors target="{countryList}">
+		<PropertyInjector targetKey="countryListData" source="{ListsManager}" sourceKey="countryListData"/>
+	</Injectors>
+	<Injectors target="{positionList}">
+		<PropertyInjector targetKey="positionListData" source="{ListsManager}" sourceKey="positionListData"/>
+	</Injectors>
+	<Injectors target="{gameTypeList}">
+		<PropertyInjector targetKey="gameTypeListData" source="{ListsManager}" sourceKey="gameTypeListData"/>
+	</Injectors>
+	<Injectors target="{rankList}">
+		<PropertyInjector targetKey="rankListData" source="{ListsManager}" sourceKey="rankListData"/>
+	</Injectors>
+	
+<!-- PERSON -->
+	<Injectors target="{personPage}">
+		<PropertyInjector targetKey="personListData" source="{PersonManager}" sourceKey="personListData"/>
+	</Injectors>
+
+<!-- TOURNAMENT -->
+	<Injectors target="{tournamentPage}">
+		<PropertyInjector targetKey="tournamentListData" source="{TournamentManager}" sourceKey="tournamentListData"/>
+		<PropertyInjector targetKey="countryListData" source="{ListsManager}" sourceKey="countryListData"/>
+	</Injectors>
+	
+<!-- TEAM -->
+	<Injectors target="{teamPage}">
+		<PropertyInjector targetKey="tournamentListData" source="{TournamentManager}" sourceKey="tournamentListData"/>
+		<PropertyInjector targetKey="personListData" source="{PersonManager}" sourceKey="personListData"/>
+		<PropertyInjector targetKey="divisionListData" source="{ListsManager}" sourceKey="divisionListData"/>
+		<PropertyInjector targetKey="countryListData" source="{ListsManager}" sourceKey="countryListData"/>
+		<PropertyInjector targetKey="positionListData" source="{ListsManager}" sourceKey="positionListData"/>
+		<PropertyInjector targetKey="rankListData" source="{ListsManager}" sourceKey="rankListData"/>
+	</Injectors>
+	<Injectors target="{newTeamTW}">
+		<PropertyInjector targetKey="tournamentListData" source="{TournamentManager}" sourceKey="tournamentListData"/>
+		<PropertyInjector targetKey="divisionListData" source="{ListsManager}" sourceKey="divisionListData"/>
+		<PropertyInjector targetKey="countryListData" source="{ListsManager}" sourceKey="countryListData"/>
+	</Injectors>
+
+	
+</EventMap>

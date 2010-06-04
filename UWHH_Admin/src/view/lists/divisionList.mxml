@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#E0E0E0">
+	
+	<mx:Script>
+		<![CDATA[
+			import events.UIEvent;
+			
+		/*** IMPORT ***/
+			[Bindable] public var divisionListData:Object;
+			
+			private function addDivision():void{
+				var uie:UIEvent = new UIEvent(UIEvent.ADD_ITEM_TO_LIST);
+				uie.whichList = "division"
+				uie.name = nameTI.text;
+				uie.code = codeTI.text;
+				dispatchEvent(uie);
+				nameTI.text = "";
+				codeTI.text = "";
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:HBox paddingBottom="0" paddingLeft="0" paddingTop="0" paddingRight="0" height="100%" width="100%">
+		<mx:DataGrid dataProvider="{divisionListData.item}" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn dataField="name" headerText="Name" width="200"/>
+				<mx:DataGridColumn dataField="code" headerText="Code"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:VBox paddingTop="10">
+			<mx:Label text="Divisions" fontWeight="bold" fontSize="16"/>
+			<mx:TextInput id="nameTI" text="Division name"/>
+			<mx:TextInput id="codeTI" text="Division Code"/>
+			<mx:Button label="Add Division" click="addDivision()"/>
+		</mx:VBox>
+	</mx:HBox>
+	
+	
+</mx:Canvas>

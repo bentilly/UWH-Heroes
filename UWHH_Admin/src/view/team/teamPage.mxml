@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#E0E0E0">
+	
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.collections.ArrayCollection;
+			import events.UIEvent;
+			
+		/*** IMPORT ***/
+			[Bindable] public var teamListData:Array;
+			[Bindable] public var personListData:Object;
+			[Bindable] public var tournamentListData:Array;
+			[Bindable] public var divisionListData:Object;
+			[Bindable] public var countryListData:Object;
+			[Bindable] public var positionListData:Object;
+			[Bindable] public var rankListData:Object;
+			
+		/*** INTERNAL ***/
+			[Bindable] private var coachFirstName:String = "";
+			[Bindable] private var coachLastName:String = "";
+			
+			private function newTeam():void{
+				var newTeamWindow:newTeamTW = newTeamTW(PopUpManager.createPopUp(this, newTeamTW, true));
+			}
+			
+			private function findPerson(firstName:Boolean):void{
+				currentState = ""
+				var uie:UIEvent = new UIEvent(UIEvent.FIND_PERSON);
+				if(firstName){
+					uie.firstName = firstNameFind.text;
+					uie.lastName = "";
+					lastNameFind.text = "";
+				}else{
+					uie.firstName = "";
+					uie.lastName = lastNameFind.text;
+					firstNameFind.text = "";
+				}
+				
+				dispatchEvent(uie);
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+<!-- BASE STATE _________________ -->	
+
+	<mx:HBox paddingBottom="0" paddingLeft="0" paddingTop="0" paddingRight="0" height="100%" width="100%">
+		<mx:DataGrid id="teamDG" dataProvider="{teamListData}" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn dataField="year" headerText="Year" width="50"/>
+				<mx:DataGridColumn dataField="countryCode" headerText="Country" width="60"/>
+				<mx:DataGridColumn dataField="divisionCode" headerText="Division" width="60"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:VBox paddingTop="10" paddingRight="10" width="100%">
+			<mx:HBox width="100%">
+				<mx:Label text="Team" fontWeight="bold" fontSize="16" width="100%"/>
+				<mx:Button label="Create new team" click="newTeam()"/>
+			</mx:HBox>
+			<mx:Label text="Players" fontWeight="bold" fontSize="13"/>
+			<mx:DataGrid id="teamPlayersDG" height="200" width="100%">
+				<mx:columns>
+					<mx:DataGridColumn dataField="firstName" headerText="First Name"/>
+					<mx:DataGridColumn dataField="lastName" headerText="Last Name"/>
+					<mx:DataGridColumn dataField="position" headerText="Position"/>
+					<mx:DataGridColumn dataField="rank" headerText="Rank"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:Label text="Coach" fontWeight="bold" fontSize="13"/>
+			<mx:Canvas width="200" height="30" backgroundColor="white" borderColor="#aaaaaa" borderStyle="solid">
+				<mx:Label text="{coachFirstName + ' ' + coachLastName}" width="100%" textAlign="center" verticalCenter="0"/>
+			</mx:Canvas>
+			<mx:Label text="Other Officials" fontWeight="bold" fontSize="13"/>
+			<mx:DataGrid id="teamOfficialsDG" height="80"  width="100%">
+				<mx:columns>
+					<mx:DataGridColumn dataField="firstName" headerText="First Name"/>
+					<mx:DataGridColumn dataField="lastName" headerText="Last Name"/>
+					<mx:DataGridColumn dataField="title" headerText="Position"/>
+				</mx:columns>
+			</mx:DataGrid>
+				
+			
+		</mx:VBox>
+		<mx:VBox height="100%">
+			<mx:Label text="Find People" fontWeight="bold" fontSize="13"/>
+			<mx:Label text="First name:" width="60"/>
+			<mx:TextInput id="firstNameFind" change="findPerson(true)"/>
+			<mx:Label text="Last name:" width="60"/>
+			<mx:TextInput id="lastNameFind" change="findPerson(false)"/>
+			<mx:DataGrid id="personDG" dataProvider="{personListData.person}" height="100%">
+				<mx:columns>
+					<mx:DataGridColumn dataField="firstName" headerText="First Name" width="120"/>
+					<mx:DataGridColumn dataField="lastName" headerText="Last Name" width="120"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:VBox>
+	</mx:HBox>
+	
+	
+</mx:Canvas>

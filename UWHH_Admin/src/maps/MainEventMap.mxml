@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap xmlns="http://mate.asfusion.com/" xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:Script>
+	<![CDATA[
+		import events.*;
+		import business.*;
+		import view.*;
+		
+		
+		[Bindable]
+		private var services:Services = new Services();
+	
+	]]>
+</mx:Script>
+	
+	<Debugger level="{Debugger.ALL}"/>
+	
+	<EventHandlers type="{UIEvent.GET_LIST}" debug="true">
+		<HTTPServiceInvoker instance="{services.getListService}" debug="true">
+			<Request 
+				whichList="{event.whichList}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{ListsManager}" method="updateList" arguments="{[resultObject, event]}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{UIEvent.ADD_ITEM_TO_LIST}" debug="true">
+		<HTTPServiceInvoker instance="{services.addToListService}" debug="true">
+			<Request 
+				whichList="{event.whichList}"
+				name="{event.name}"
+				code="{event.code}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{ListsManager}" method="updateList" arguments="{[resultObject, event]}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+<!-- Person -->
+	<EventHandlers type="{UIEvent.ADD_PERSON}" debug="true">
+		<HTTPServiceInvoker instance="{services.addPersonService}" debug="true">
+			<Request 
+				firstName="{event.firstName}"
+				lastName="{event.lastName}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{PersonManager}" method="updateList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+
+	<EventHandlers type="{UIEvent.FIND_PERSON}" debug="true">
+		<HTTPServiceInvoker instance="{services.findPersonService}" debug="true">
+			<Request 
+				firstName="{event.firstName}"
+				lastName="{event.lastName}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{PersonManager}" method="updateList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{UIEvent.SAVE_PERSON}" debug="true">
+		<HTTPServiceInvoker instance="{services.savePersonService}" debug="true">
+			<Request 
+				firstName="{event.firstName}"
+				lastName="{event.lastName}"
+				key="{event.key}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{PersonManager}" method="updateList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+<!-- Tournament ________________________________ -->
+	<EventHandlers type="{UIEvent.ADD_TOURNAMENT}" debug="true">
+		<HTTPServiceInvoker instance="{services.addTournamentService}" debug="true">
+			<Request 
+				name="{event.name}"
+				city="{event.city}"
+				country="{event.country}"
+				date="{event.dateString}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TournamentManager}" method="updateList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+
+	<EventHandlers type="{UIEvent.FIND_TOURNAMENT}" debug="true">
+		<HTTPServiceInvoker instance="{services.findTournamentService}" debug="true">
+			<Request 
+				name="{event.name}"
+				city="{event.city}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TournamentManager}" method="updateList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{UIEvent.SAVE_TOURNAMENT}" debug="true">
+		<HTTPServiceInvoker instance="{services.saveTournamentService}" debug="true">
+			<Request 
+				name="{event.name}"
+				city="{event.city}"
+				country="{event.country}"
+				date="{event.dateString}"
+				key="{event.key}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TournamentManager}" method="updateList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+<!-- Team ________________________________ -->
+	<EventHandlers type="{UIEvent.ADD_TEAM}" debug="true">
+		<HTTPServiceInvoker instance="{services.addTeamService}" debug="true">
+			<Request 
+				name="{event.name}"
+				tournament="{event.tournament}"
+				country="{event.country}"
+				division="{event.division}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TeamManager}" method="updateList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</EventMap>

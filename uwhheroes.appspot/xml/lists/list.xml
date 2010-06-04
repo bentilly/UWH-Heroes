@@ -1,0 +1,5 @@
+<items>
+	{% for i in items %}
+		<item name="{{ i.name|escape }}" code="{{ i.code|escape }}" key="{{ i.key }}" />
+	{% endfor %}
+</items>

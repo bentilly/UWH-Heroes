@@ -1,0 +1,5 @@
+<teams>
+	{% for t in teams %}
+		<team name="{{ t.name|escape }}" country="{{ t.country.name|escape }}" division="{{ t.division.name|escape }}" key="{{ t.key }}"/>
+	{% endfor %}
+</teams>

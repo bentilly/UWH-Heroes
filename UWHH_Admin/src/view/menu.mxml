@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="160" height="100%"
+	backgroundColor="#CCCCCC">
+	
+	<mx:Script>
+		<![CDATA[
+			import events.UIEvent;
+			
+			private function goStack(i:int):void{
+				var uie:UIEvent = new UIEvent(UIEvent.SWITCH_STACK);
+				uie.stackIndex = i;
+				dispatchEvent(uie); 
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox paddingLeft="5" paddingTop="5" verticalGap="0">
+		<mx:Label text="UWH Heroes Admin" fontWeight="bold" fontSize="14" click="goStack(0)"/>
+		<mx:Label text="Show" fontWeight="bold" fontSize="12"/>
+		<mx:VBox verticalGap="0" paddingBottom="10" paddingLeft="10">
+			<mx:Label text="Person" click="goStack(1)"/>
+			<mx:Label text="Tournament" click="goStack(2)"/>
+			<mx:Label text="Team" click="goStack(3)"/>
+			<mx:Label text="Game"/>
+			<mx:Label text="Officials"/>
+		</mx:VBox>
+		<mx:Label text="Lists" fontWeight="bold" fontSize="12"/>
+		<mx:VBox verticalGap="0" paddingBottom="10"  paddingLeft="10">
+			<mx:Label text="Country" click="goStack(4)"/>
+			<mx:Label text="Division" click="goStack(5)"/>
+			<mx:Label text="GameType" click="goStack(6)"/>
+			<mx:Label text="Position" click="goStack(7)"/>
+			<mx:Label text="Rank" click="goStack(8)"/>
+		</mx:VBox>
+	</mx:VBox>
+	
+</mx:Canvas>

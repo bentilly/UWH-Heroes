@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Object xmlns="*" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:mate="http://mate.asfusion.com/">
+
+	<mx:Script>
+		<![CDATA[
+			[Bindable] public var URLPrefix:String = "http://localhost:8088"; //DEV
+			//[Bindable] public var URLPrefix:String = ""; //PROD
+		]]>
+	</mx:Script>
+
+	<mx:HTTPService id="getListService" url="{URLPrefix+'/getList'}" method="GET"/>
+	<mx:HTTPService id="addToListService" url="{URLPrefix+'/addToList'}" method="POST"/>
+	<!-- Person -->
+	<mx:HTTPService id="addPersonService" url="{URLPrefix+'/addPerson'}" method="POST"/>
+	<mx:HTTPService id="findPersonService" url="{URLPrefix+'/findPerson'}" method="GET"/>
+	<mx:HTTPService id="savePersonService" url="{URLPrefix+'/savePerson'}" method="POST"/>
+	<!-- Tournament -->
+	<mx:HTTPService id="addTournamentService" url="{URLPrefix+'/addTournament'}" method="POST"/>
+	<mx:HTTPService id="findTournamentService" url="{URLPrefix+'/findTournament'}" method="GET"/>
+	<mx:HTTPService id="saveTournamentService" url="{URLPrefix+'/saveTournament'}" method="POST"/>
+	<!-- Team -->
+	<mx:HTTPService id="addTeamService" url="{URLPrefix+'/addTeam'}" method="POST"/>
+
+
+
+</Object>
+ 

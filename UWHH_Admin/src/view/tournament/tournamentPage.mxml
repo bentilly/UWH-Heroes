@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#E0E0E0">
+	
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import events.UIEvent;
+			
+		/*** IMPORT ***/
+			[Bindable] public var tournamentListData:Array;
+			[Bindable] public var countryListData:Object;
+			
+		/*** INTERNAL ***/
+			[Bindable] private var tname:String;
+			[Bindable] private var tyear:String;
+			[Bindable] private var city:String;
+			
+			private function addTournament():void{
+				var uie:UIEvent = new UIEvent(UIEvent.ADD_TOURNAMENT);
+				uie.name = nameNew.text;
+				uie.city = cityNew.text;
+				uie.country = countryCBNew.selectedItem.key;
+				uie.dateString = dateNew.selectedDate.getDate() + "-" + (dateNew.selectedDate.getMonth()+1) + "-" + dateNew.selectedDate.getFullYear();
+				
+				dispatchEvent(uie);
+				nameNew.text = "";
+				cityNew.text = "";
+			}
+			//Limited number of Tournaments. Should be easy to find by sorting the list
+			/* private function findTournament(useName:Boolean):void{
+				currentState = ""
+				var uie:UIEvent = new UIEvent(UIEvent.FIND_TOURNAMENT);
+				if(useName){
+					uie.name = nameFind.text;
+					uie.city = "";
+					cityFind.text = "";
+				}else{
+					uie.name = "";
+					uie.city = cityFind.text;
+					nameFind.text = "";
+				}
+				
+				dispatchEvent(uie);
+			} */
+			private function showTournament():void{
+				currentState = "ShowTournamentState"
+				tname = tournamentDG.selectedItem.name;
+				city = tournamentDG.selectedItem.city;
+				tyear = tournamentDG.selectedItem.year;
+				//dateEdit.selectedDate = tournamentDG.selectedItem.dateObject;
+				for(var c:int; c<countryListData.item.length; c++){
+					if(countryListData.item[c].name == tournamentDG.selectedItem.country){
+						countryCBEdit.selectedIndex = c;
+						break;
+					}
+				}
+				
+				if(tournamentDG.selectedItem.dateObject.getFullYear()){
+					dateEdit.selectedDate = tournamentDG.selectedItem.dateObject;
+				}else{
+					dateEdit.selectedDate = new Date();
+				}
+				
+			}
+			private function saveTournament():void{
+				var uie:UIEvent = new UIEvent(UIEvent.SAVE_TOURNAMENT);
+				uie.key = tournamentDG.selectedItem.key;
+				uie.name = nameEdit.text;
+				uie.city = cityEdit.text;
+				uie.country = countryCBEdit.selectedItem.key;
+				uie.dateString = dateEdit.selectedDate.getDate() + "-" + (dateEdit.selectedDate.getMonth()+1) + "-" + dateEdit.selectedDate.getFullYear();
+				dispatchEvent(uie);
+				tournamentDG.selectedIndex = -1;
+				currentState = '';
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+<!-- STATES _________________ -->
+	<mx:states>
+		<mx:State name="ShowTournamentState">
+			<mx:AddChild relativeTo="{tournamentFields}" position="lastChild">
+				<mx:VBox borderStyle="solid" borderSides="bottom" width="100%">
+				<!-- EDIT -->
+					<mx:Label text="{tyear + ' ' + tname}" fontWeight="bold" fontSize="14"/>
+					<mx:HBox width="100%">
+						<mx:Label text="Tournament name:" width="120"/>
+						<mx:TextInput id="nameEdit" text="{tname}"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="City:" width="120"/>
+						<mx:TextInput id="cityEdit" text="{city}"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="Country:" width="120"/>
+						<mx:ComboBox id="countryCBEdit" dataProvider="{countryListData.item}" labelField="name"/>			
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="Start Date:" width="120"/>
+						<mx:DateField id="dateEdit" formatString="DD/MM/YYYY"/>		
+					</mx:HBox>
+					<mx:Button label="Save Tournament" click="saveTournament()"/>
+					<mx:Spacer height="8"/>
+				</mx:VBox>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	
+<!-- BASE STATE _________________ -->	
+
+	<mx:HBox paddingBottom="0" paddingLeft="0" paddingTop="0" paddingRight="0" height="100%" width="100%">
+		<mx:DataGrid id="tournamentDG" dataProvider="{tournamentListData}" height="100%" itemClick="showTournament()">
+			<mx:columns>
+				<mx:DataGridColumn dataField="year" headerText="Year" width="80"/>
+				<mx:DataGridColumn dataField="name" headerText="Tournament Name" width="150"/>
+				<mx:DataGridColumn dataField="city" headerText="City" width="150"/>
+				<mx:DataGridColumn dataField="country" headerText="Country" width="150"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:VBox paddingTop="10" paddingRight="10" width="100%">
+			<mx:VBox id="tournamentFields" paddingLeft="5" paddingTop="5" width="100%">
+				<mx:Label text="Tournament" fontWeight="bold" fontSize="16"/>
+			<!-- FIND -->
+				<!--<mx:VBox borderStyle="solid" borderSides="bottom" width="100%">
+					<mx:Label text="Find" fontWeight="bold" fontSize="14"/>
+					<mx:HBox width="100%">
+						<mx:Label text="Tournament name:" width="120"/>
+						<mx:TextInput id="nameFind" change="findTournament(true)"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="City:" width="120"/>
+						<mx:TextInput id="cityFind" change="findTournament(false)"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="Country:" width="120"/>
+						<mx:TextInput id="countryFind" change="findTournament(false)"/>			
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="Country:" width="120"/>
+						<mx:TextInput id="countryFind" change="findTournament(false)"/>			
+					</mx:HBox>
+					<mx:Spacer height="8"/>
+				</mx:VBox>-->
+			<!-- NEW -->
+				<mx:VBox borderStyle="solid" borderSides="bottom" width="100%">
+					<mx:Label text="New" fontWeight="bold" fontSize="14"/>
+					<mx:HBox width="100%">
+						<mx:Label text="Tournament name:" width="120"/>
+						<mx:TextInput id="nameNew" text="" change="currentState = ''"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="City:" width="120"/>
+						<mx:TextInput id="cityNew" text="" change="currentState = ''"/>			
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="Country:" width="120"/>
+						<mx:ComboBox id="countryCBNew" dataProvider="{countryListData.item}" labelField="name"/>			
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="Start Date:" width="120"/>
+						<mx:DateField  id="dateNew" selectedDate="{new Date()}" formatString="DD/MM/YYYY"/>
+					</mx:HBox>
+					<mx:Button label="Add Tournament" click="addTournament()"/>
+					<mx:Spacer height="8"/>
+				</mx:VBox>
+				
+				
+				
+			</mx:VBox>
+			
+		</mx:VBox>
+	</mx:HBox>
+	
+	
+</mx:Canvas>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" height="100%"
+	horizontalCenter="0"
+	verticalCenter="0"
+	xmlns:view="view.*" xmlns:intro="view.intro.*" xmlns:mate="http://mate.asfusion.com/" xmlns:lists="view.lists.*" xmlns:person="view.person.*" xmlns:tournament="view.tournament.*" xmlns:team="view.team.*">
+
+	<mx:Script>
+		<![CDATA[
+			import events.UIEvent;
+			
+			private function switchStack(e:UIEvent):void{
+				var i:int = e.stackIndex;
+				var uie:UIEvent;
+				switch(i){
+					case 0:
+						break;
+					case 1: //person page
+						uie = new UIEvent(UIEvent.FIND_PERSON);
+						uie.firstName = "";
+						uie.lastName = "";
+						dispatchEvent(uie);
+						break;
+					case 2: //tournament page
+						uie = new UIEvent(UIEvent.FIND_TOURNAMENT);
+						uie.name = "";
+						uie.city = "";
+						dispatchEvent(uie);
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "country";
+						dispatchEvent(uie);
+						break;
+					case 3: //team page
+						uie = new UIEvent(UIEvent.FIND_PERSON);
+						uie.firstName = "";
+						uie.lastName = "";
+						dispatchEvent(uie);
+						uie = new UIEvent(UIEvent.FIND_TOURNAMENT);
+						uie.name = "";
+						uie.city = "";
+						dispatchEvent(uie);
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "country";
+						dispatchEvent(uie);
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "division";
+						dispatchEvent(uie);
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "position";
+						dispatchEvent(uie);
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "rank";
+						dispatchEvent(uie);
+						break;
+					case 4:
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "country";
+						dispatchEvent(uie);
+						break;
+					case 5:
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "division";
+						dispatchEvent(uie);
+						break;
+					case 6:
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "gameType";
+						dispatchEvent(uie);
+						break;
+					case 7:
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "position";
+						dispatchEvent(uie);
+						break;
+					case 8:
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "rank";
+						dispatchEvent(uie);
+						break;
+					default:
+						break;
+				}
+				viewStack.selectedIndex = i;
+				
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	<mate:Listener type="{UIEvent.SWITCH_STACK}" receive="switchStack(event);" />
+	
+	<mx:HBox height="100%" width="100%" horizontalGap="0" borderStyle="solid">
+		<view:menu/>
+		<mx:ViewStack id="viewStack" height="100%" width="100%">
+			<intro:introComp/>
+			<person:personPage/>
+			<tournament:tournamentPage/>
+			<team:teamPage/>
+			<lists:countryList/>
+			<lists:divisionList/>
+			<lists:gameTypeList/>
+			<lists:positionList/>
+			<lists:rankList/>
+			
+		</mx:ViewStack>
+	</mx:HBox>
+	
+</mx:Canvas>

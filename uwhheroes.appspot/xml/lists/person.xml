@@ -1,0 +1,5 @@
+<people>
+	{% for p in people %}
+		<person firstName="{{ p.firstName|escape }}" lastName="{{ p.lastName|escape }}" key="{{ p.key }}"/>
+	{% endfor %}
+</people>

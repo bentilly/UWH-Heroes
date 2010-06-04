@@ -1,0 +1,5 @@
+<tournaments>
+	{% for t in tournaments %}
+		<tournament name="{{ t.name|escape }}" city="{{ t.city|escape }}" country="{{ t.country.name|escape }}" date="{{ t.startDate|date:"d-m-Y" }}" key="{{ t.key }}"/>
+	{% endfor %}
+</tournaments>
