@@ -44,8 +44,10 @@ class Squad(db.Model):
 	tournament = db.ReferenceProperty(Tournament)
 
 class Team(db.Model):
-	squad = db.ReferenceProperty(Squad)
 	division = db.ReferenceProperty(Division)
+	tournament = db.ReferenceProperty(Tournament)
+	country = db.ReferenceProperty(Country)
+	name = db.StringProperty()
 	#def players = ref via Team_Player
 
 class GameTeam(db.Model):
