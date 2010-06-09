@@ -31,7 +31,9 @@
 		</mx:DataGrid>
 		<mx:VBox paddingTop="10">
 			<mx:Label text="Positions" fontWeight="bold" fontSize="16"/>
+			<mx:Label text="Position Name"/>
 			<mx:TextInput id="nameTI" text="Position name"/>
+			<mx:Label text="Position Code"/>
 			<mx:TextInput id="codeTI" text="Position Code"/>
 			<mx:Button label="Add Position" click="addPosition()"/>
 		</mx:VBox>

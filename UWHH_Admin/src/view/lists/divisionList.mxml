@@ -31,7 +31,9 @@
 		</mx:DataGrid>
 		<mx:VBox paddingTop="10">
 			<mx:Label text="Divisions" fontWeight="bold" fontSize="16"/>
+			<mx:Label text="Division Name"/>
 			<mx:TextInput id="nameTI" text="Division name"/>
+			<mx:Label text="Division Code"/>
 			<mx:TextInput id="codeTI" text="Division Code"/>
 			<mx:Button label="Add Division" click="addDivision()"/>
 		</mx:VBox>

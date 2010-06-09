@@ -39,33 +39,25 @@ class Tournament(db.Model):
 	startDate = db.DateProperty()
 	name = db.StringProperty()
 
-class Squad(db.Model):
-	country = db.ReferenceProperty(Country)
-	tournament = db.ReferenceProperty(Tournament)
-
 class Team(db.Model):
 	division = db.ReferenceProperty(Division)
 	tournament = db.ReferenceProperty(Tournament)
 	country = db.ReferenceProperty(Country)
 	name = db.StringProperty()
-	#def players = ref via Team_Player
-
-class GameTeam(db.Model):
-	team = db.ReferenceProperty(Team)
-	#coach = db.ReferenceProperty(Coach)
-	score = db.IntegerProperty()
-	#def players = ref via Game_Player
+	coach = db.ReferenceProperty(Person)
 	
 class Game(db.Model):
-	tournament = db.ReferenceProperty(Tournament)
+	tournament = db.ReferenceProperty(Tournament, collection_name='game_set')
 	division = db.ReferenceProperty(Division)
 	gameType = db.ReferenceProperty(GameType)
 	startDateTime = db.DateTimeProperty()
-	blackTeam = db.ReferenceProperty(GameTeam, collection_name="whiteTeam_set")
-	whiteTeam = db.ReferenceProperty(GameTeam)
 	testMatch = db.BooleanProperty()
-	#def referees = ref via Game_Referee
 	
+class GameTeam(db.Model):
+	team = db.ReferenceProperty(Team)
+	score = db.IntegerProperty()
+	colour = db.StringProperty()
+	game = db.ReferenceProperty(Game, collection_name='gameTeam_set')
 
 
 #------------References
@@ -80,33 +72,15 @@ class Game_Coach(db.Model):
 	person = db.ReferenceProperty(Person)
 	gameTeam = db.ReferenceProperty(GameTeam)
 
-class Game_Referee(db.Model):
-	person = db.ReferenceProperty(Person)
-	game = db.ReferenceProperty(Game)
-
 class Team_Player(db.Model):
 	person = db.ReferenceProperty(Person)
-	team = db.ReferenceProperty(Team)
+	team = db.ReferenceProperty(Team, collection_name='teamPlayers_set')
 	position = db.ReferenceProperty(Position)
 	rank = db.ReferenceProperty(Rank)
-	
-class Team_Coach(db.Model):
-	person = db.ReferenceProperty(Person)
-	team = db.ReferenceProperty(Team)
 
 class Team_Official(db.Model):
 	person = db.ReferenceProperty(Person)
-	team = db.ReferenceProperty(Team)
-	title = db.StringProperty()
-
-class Squad_Official(db.Model):
-	person = db.ReferenceProperty(Person)
-	squad = db.ReferenceProperty(Squad)
-	title = db.StringProperty()
-
-class Tournament_Official(db.Model):
-	person = db.ReferenceProperty(Person)
-	tournament = db.ReferenceProperty(Tournament)
+	team = db.ReferenceProperty(Team, collection_name='teamOfficials_set')
 	title = db.StringProperty()
 	
 

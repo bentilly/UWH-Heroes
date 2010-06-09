@@ -31,7 +31,9 @@
 		</mx:DataGrid>
 		<mx:VBox paddingTop="10">
 			<mx:Label text="Game Types" fontWeight="bold" fontSize="16"/>
+			<mx:Label text="Game type name"/>
 			<mx:TextInput id="nameTI" text="Game Type name"/>
+			<mx:Label text="Game type code"/>
 			<mx:TextInput id="codeTI" text="Game Type Code"/>
 			<mx:Button label="Add Game Type" click="addGameType()"/>
 		</mx:VBox>

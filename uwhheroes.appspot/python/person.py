@@ -13,10 +13,19 @@ class FindPerson(webapp.RequestHandler):
 		ln = self.request.get('lastName')
 		
 		if ln == "":
-			people = db.GqlQuery("SELECT * FROM Person WHERE firstName >= :1 AND firstName < :2", fn, fn+u'\ufffd').fetch(1000)
+			people = db.GqlQuery("SELECT * FROM Person WHERE firstName >= :1 AND firstName < :2", fn, fn+u'\ufffd')
 		else:
-			people = db.GqlQuery("SELECT * FROM Person WHERE lastName >= :1 AND lastName < :2", ln, ln+u'\ufffd').fetch(1000)
+			people = db.GqlQuery("SELECT * FROM Person WHERE lastName >= :1 AND lastName < :2", ln, ln+u'\ufffd')
 				
+		template_values = {
+							"people":people
+							}
+		path = os.path.join(os.path.dirname(__file__), '../xml/lists/person.xml')
+		self.response.out.write(template.render(path, template_values))
+		
+class GetAllPeople(webapp.RequestHandler):
+	def get(self):
+		people = db.GqlQuery("SELECT * FROM Person ORDER BY lastName")
 		template_values = {
 							"people":people
 							}
@@ -31,12 +40,7 @@ class AddPerson(webapp.RequestHandler):
 		p.lastName = self.request.get('lastName')
 		p.put()
 		
-		people = db.GqlQuery("SELECT * FROM Person ORDER BY lastName").fetch(1000)
-		template_values = {
-							"people":people
-							}
-		path = os.path.join(os.path.dirname(__file__), '../xml/lists/person.xml')
-		self.response.out.write(template.render(path, template_values))
+		self.redirect('/getAllPeople')
 		
 class SavePerson(webapp.RequestHandler):
 	def post(self):
@@ -46,10 +50,5 @@ class SavePerson(webapp.RequestHandler):
 		p.lastName = self.request.get('lastName')
 		p.put()
 		
-		people = db.GqlQuery("SELECT * FROM Person ORDER BY lastName").fetch(1000)
-		template_values = {
-							"people":people
-							}
-		path = os.path.join(os.path.dirname(__file__), '../xml/lists/person.xml')
-		self.response.out.write(template.render(path, template_values))
+		self.redirect('/getAllPeople')
 

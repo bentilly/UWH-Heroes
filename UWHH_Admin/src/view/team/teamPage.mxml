@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#E0E0E0">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundColor="#E0E0E0" xmlns:mate="http://mate.asfusion.com/">
+	
 	
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.events.DragEvent;
 			import mx.managers.PopUpManager;
 			import mx.collections.ArrayCollection;
 			import events.UIEvent;
 			
 		/*** IMPORT ***/
-			[Bindable] public var teamListData:Array;
+			[Bindable] public var teamListData:Object;
+			[Bindable] public var teamPlayersListData:Object;
+			[Bindable] public var teamCoachData:Object;
+			[Bindable] public var teamOfficialsListData:Object;
+			
 			[Bindable] public var personListData:Object;
 			[Bindable] public var tournamentListData:Array;
 			[Bindable] public var divisionListData:Object;
@@ -20,13 +26,94 @@
 		/*** INTERNAL ***/
 			[Bindable] private var coachFirstName:String = "";
 			[Bindable] private var coachLastName:String = "";
+			[Bindable] private var teamPageTitle:String = "Team";
+			
+			private function resetPage():void{
+				teamPageTitle = "Team";
+				currentState = '';
+			}
 			
 			private function newTeam():void{
 				var newTeamWindow:newTeamTW = newTeamTW(PopUpManager.createPopUp(this, newTeamTW, true));
+				teamDG.selectedIndex = -1;
+				currentState = "";
+				teamPageTitle = "Team";
+			}
+			private function editTeam():void{
+				currentState = "editTeamState";
+				teamPageTitle = teamDG.selectedItem.fullName;
+				var uie:UIEvent = new UIEvent(UIEvent.GET_TEAM_PLAYERS);
+				uie.teamKey = teamDG.selectedItem.key;
+				dispatchEvent(uie);
+			}
+			private function addPlayer(event:DragEvent):void{
+				var itemsArray:Array = event.dragSource.dataForFormat("items") as Array;
+				var uie:UIEvent = new UIEvent(UIEvent.ADD_PERSON_TO_TEAM);
+				uie.personKey = itemsArray[0].key;
+				uie.teamKey = teamDG.selectedItem.key;
+				dispatchEvent(uie);
+				teamPlayersDG.selectedIndex = -1;
+				currentState = "editTeamState";
+			}
+			private function addCoach(event:DragEvent):void{
+				var itemsArray:Array = event.dragSource.dataForFormat("items") as Array;
+				var uie:UIEvent = new UIEvent(UIEvent.ADD_COACH_TO_TEAM);
+				uie.personKey = itemsArray[0].key;
+				uie.teamKey = teamDG.selectedItem.key;
+				dispatchEvent(uie);
+				teamPlayersDG.selectedIndex = -1;
+				currentState = "editTeamState";
+			}
+			private function addOfficial(event:DragEvent):void{
+				var itemsArray:Array = event.dragSource.dataForFormat("items") as Array;
+				var uie:UIEvent = new UIEvent(UIEvent.ADD_OFFICIAL_TO_TEAM);
+				uie.personKey = itemsArray[0].key;
+				uie.teamKey = teamDG.selectedItem.key;
+				dispatchEvent(uie);
+				teamPlayersDG.selectedIndex = -1;
+				currentState = "editTeamState";
+			}
+			private function editPlayer():void{
+				currentState = "editPlayerState";
+				var i:int;
+				for(i = 0; i<positionListData.item.length; i++){
+					if(teamPlayersDG.selectedItem.position == positionListData.item[i].name){
+						positionCB.selectedIndex = i;
+						break;
+					}
+				}
+				for(i = 0; i<rankListData.item.length; i++){
+					if(teamPlayersDG.selectedItem.rank == rankListData.item[i].name){
+						rankCB.selectedIndex = i;
+						break;
+					}
+				}
+			}
+			private function editOfficial():void{
+				currentState = "editOfficialState";
+				
+				
+			}
+			private function savePlayer():void{
+				var uie:UIEvent = new UIEvent(UIEvent.SAVE_TEAM_PLAYER);
+				uie.key = teamPlayersDG.selectedItem.key;
+				uie.positionKey = positionCB.selectedItem.key;
+				uie.rankKey = rankCB.selectedItem.key
+				dispatchEvent(uie);
+				teamPlayersDG.selectedIndex = -1;
+				currentState = "editTeamState";
+			}
+			
+			private function saveOfficial():void{
+				var uie:UIEvent = new UIEvent(UIEvent.SAVE_TEAM_OFFICIAL);
+				uie.key = teamOfficialsDG.selectedItem.key;
+				uie.title = officialTitleTI.text;
+				dispatchEvent(uie);
+				teamOfficialsDG.selectedIndex = -1;
+				currentState = "editTeamState";
 			}
 			
 			private function findPerson(firstName:Boolean):void{
-				currentState = ""
 				var uie:UIEvent = new UIEvent(UIEvent.FIND_PERSON);
 				if(firstName){
 					uie.firstName = firstNameFind.text;
@@ -45,58 +132,109 @@
 		]]>
 	</mx:Script>
 	
+	<mate:Listener type="{UIEvent.RESET_PAGES}" receive="resetPage()" />
+		
+	<mx:states>
+		<mx:State name="editTeamState">
+			<mx:AddChild relativeTo="{middleCol}" position="lastChild">
+				<mx:VBox>
+					<mx:Label text="{teamDG.selectedItem.tournamentName}" paddingTop="-5" fontSize="12"/>
+					<mx:Label text="Players" fontWeight="bold" fontSize="13"/>
+					<mx:DataGrid 
+						id="teamPlayersDG" height="288" width="100%" 
+						dropEnabled="true" dragDrop="addPlayer(event)" 
+						dataProvider="{teamPlayersListData.player}"
+						itemClick="editPlayer()"
+						>
+						<mx:columns>
+							<mx:DataGridColumn dataField="firstName" headerText="First Name"/>
+							<mx:DataGridColumn dataField="lastName" headerText="Last Name"/>
+							<mx:DataGridColumn dataField="position" headerText="Position"/>
+							<mx:DataGridColumn dataField="rank" headerText="Rank"/>
+						</mx:columns>
+					</mx:DataGrid>
+					<mx:Label text="Coach" fontWeight="bold" fontSize="13"/>
+					<mx:DataGrid id="coachDG" dataProvider="{teamCoachData.coach}" height="47"  width="100%" dropEnabled="true" dragDrop="addCoach(event)">
+						<mx:columns>
+							<mx:DataGridColumn dataField="firstName" headerText="First Name"/>
+							<mx:DataGridColumn dataField="lastName" headerText="Last Name"/>
+						</mx:columns>
+					</mx:DataGrid>
+					<mx:Label text="Other Officials" fontWeight="bold" fontSize="13"/>
+					<mx:DataGrid id="teamOfficialsDG" 
+						dataProvider="{teamOfficialsListData.official}" 
+						height="80"  width="100%" 
+						dropEnabled="true" dragDrop="addOfficial(event)"
+						itemClick="editOfficial()"
+						>
+						<mx:columns>
+							<mx:DataGridColumn dataField="firstName" headerText="First Name"/>
+							<mx:DataGridColumn dataField="lastName" headerText="Last Name"/>
+							<mx:DataGridColumn dataField="title" headerText="Position"/>
+						</mx:columns>
+					</mx:DataGrid>
+				</mx:VBox>
+			</mx:AddChild>
+			
+			<mx:AddChild relativeTo="{mainContent}" position="lastChild">
+				<mx:VBox height="100%">
+					<mx:Label text="Find People" fontWeight="bold" fontSize="13"/>
+					<mx:Label text="First name:" width="60"/>
+					<mx:TextInput id="firstNameFind" change="findPerson(true)"/>
+					<mx:Label text="Last name:" width="60"/>
+					<mx:TextInput id="lastNameFind" change="findPerson(false)"/>
+					<mx:DataGrid id="personDG" dataProvider="{personListData.person}" height="100%" dragEnabled="true">
+						<mx:columns>
+							<mx:DataGridColumn dataField="firstName" headerText="First Name" width="120"/>
+							<mx:DataGridColumn dataField="lastName" headerText="Last Name" width="120"/>
+						</mx:columns>
+					</mx:DataGrid>
+				</mx:VBox>
+			</mx:AddChild>
+			
+		</mx:State>
+		
+		<mx:State name="editPlayerState" basedOn="editTeamState">
+			<mx:AddChild relativeTo="{teamPlayersDG}" position="after">
+				<mx:HBox>
+					<mx:Label text="{teamPlayersDG.selectedItem.firstName + ' ' + teamPlayersDG.selectedItem.lastName +':'}" fontSize="12" fontWeight="bold"/>
+					<mx:ComboBox id="positionCB" dataProvider="{positionListData.item}" labelField="name"/>
+					<mx:ComboBox id="rankCB" dataProvider="{rankListData.item}" labelField="name"/>
+					<mx:Button label="Save" click="savePlayer()"/>
+				</mx:HBox>
+			</mx:AddChild>
+		</mx:State>
+		
+		<mx:State name="editOfficialState" basedOn="editTeamState">
+			<mx:AddChild relativeTo="{teamOfficialsDG}" position="after">
+				<mx:HBox>
+					<mx:Label text="{teamOfficialsDG.selectedItem.firstName + ' ' + teamOfficialsDG.selectedItem.lastName +':'}" fontSize="12" fontWeight="bold"/>
+					<mx:TextInput id="officialTitleTI" text="{teamOfficialsDG.selectedItem.title}"/>
+					<mx:Button label="Save" click="saveOfficial()"/>
+				</mx:HBox>
+			</mx:AddChild>
+		</mx:State>
+		
+	</mx:states>
+	
 <!-- BASE STATE _________________ -->	
 
-	<mx:HBox paddingBottom="0" paddingLeft="0" paddingTop="0" paddingRight="0" height="100%" width="100%">
-		<mx:DataGrid id="teamDG" dataProvider="{teamListData}" height="100%">
+	<mx:HBox id="mainContent" paddingBottom="0" paddingLeft="0" paddingTop="0" paddingRight="0" height="100%" width="100%">
+		<mx:DataGrid id="teamDG" dataProvider="{teamListData.team}" height="100%" itemClick="editTeam()">
 			<mx:columns>
-				<mx:DataGridColumn dataField="year" headerText="Year" width="50"/>
-				<mx:DataGridColumn dataField="countryCode" headerText="Country" width="60"/>
-				<mx:DataGridColumn dataField="divisionCode" headerText="Division" width="60"/>
+				<mx:DataGridColumn dataField="teamid" headerText="Team" width="100"/>
+				<mx:DataGridColumn dataField="country" headerText="Country" width="100"/>
+				<mx:DataGridColumn dataField="division" headerText="Division" width="100"/>
 			</mx:columns>
 		</mx:DataGrid>
-		<mx:VBox paddingTop="10" paddingRight="10" width="100%">
+		
+		<mx:VBox id="middleCol" paddingTop="10" paddingRight="10" width="100%">
 			<mx:HBox width="100%">
-				<mx:Label text="Team" fontWeight="bold" fontSize="16" width="100%"/>
+				<mx:Label text="{teamPageTitle}" fontWeight="bold" fontSize="16" width="100%"/>
 				<mx:Button label="Create new team" click="newTeam()"/>
 			</mx:HBox>
-			<mx:Label text="Players" fontWeight="bold" fontSize="13"/>
-			<mx:DataGrid id="teamPlayersDG" height="200" width="100%">
-				<mx:columns>
-					<mx:DataGridColumn dataField="firstName" headerText="First Name"/>
-					<mx:DataGridColumn dataField="lastName" headerText="Last Name"/>
-					<mx:DataGridColumn dataField="position" headerText="Position"/>
-					<mx:DataGridColumn dataField="rank" headerText="Rank"/>
-				</mx:columns>
-			</mx:DataGrid>
-			<mx:Label text="Coach" fontWeight="bold" fontSize="13"/>
-			<mx:Canvas width="200" height="30" backgroundColor="white" borderColor="#aaaaaa" borderStyle="solid">
-				<mx:Label text="{coachFirstName + ' ' + coachLastName}" width="100%" textAlign="center" verticalCenter="0"/>
-			</mx:Canvas>
-			<mx:Label text="Other Officials" fontWeight="bold" fontSize="13"/>
-			<mx:DataGrid id="teamOfficialsDG" height="80"  width="100%">
-				<mx:columns>
-					<mx:DataGridColumn dataField="firstName" headerText="First Name"/>
-					<mx:DataGridColumn dataField="lastName" headerText="Last Name"/>
-					<mx:DataGridColumn dataField="title" headerText="Position"/>
-				</mx:columns>
-			</mx:DataGrid>
-				
-			
 		</mx:VBox>
-		<mx:VBox height="100%">
-			<mx:Label text="Find People" fontWeight="bold" fontSize="13"/>
-			<mx:Label text="First name:" width="60"/>
-			<mx:TextInput id="firstNameFind" change="findPerson(true)"/>
-			<mx:Label text="Last name:" width="60"/>
-			<mx:TextInput id="lastNameFind" change="findPerson(false)"/>
-			<mx:DataGrid id="personDG" dataProvider="{personListData.person}" height="100%">
-				<mx:columns>
-					<mx:DataGridColumn dataField="firstName" headerText="First Name" width="120"/>
-					<mx:DataGridColumn dataField="lastName" headerText="Last Name" width="120"/>
-				</mx:columns>
-			</mx:DataGrid>
-		</mx:VBox>
+		
 	</mx:HBox>
 	
 	

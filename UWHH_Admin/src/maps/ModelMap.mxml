@@ -3,6 +3,9 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import view.game.newGameTW;
+			import view.game.gamePage;
+			import view.game.selectTournamentTW;
 			import view.team.newTeamTW;
 			import view.team.teamPage;
 			import view.tournament.tournamentPage;
@@ -48,17 +51,37 @@
 	
 <!-- TEAM -->
 	<Injectors target="{teamPage}">
+		<PropertyInjector targetKey="teamListData" source="{TeamManager}" sourceKey="teamListData"/>
 		<PropertyInjector targetKey="tournamentListData" source="{TournamentManager}" sourceKey="tournamentListData"/>
 		<PropertyInjector targetKey="personListData" source="{PersonManager}" sourceKey="personListData"/>
 		<PropertyInjector targetKey="divisionListData" source="{ListsManager}" sourceKey="divisionListData"/>
 		<PropertyInjector targetKey="countryListData" source="{ListsManager}" sourceKey="countryListData"/>
 		<PropertyInjector targetKey="positionListData" source="{ListsManager}" sourceKey="positionListData"/>
 		<PropertyInjector targetKey="rankListData" source="{ListsManager}" sourceKey="rankListData"/>
+		<PropertyInjector targetKey="teamPlayersListData" source="{TeamManager}" sourceKey="teamPlayersListData"/>
+		<PropertyInjector targetKey="teamOfficialsListData" source="{TeamManager}" sourceKey="teamOfficialsListData"/>
+		<PropertyInjector targetKey="teamCoachData" source="{TeamManager}" sourceKey="teamCoachData"/>
 	</Injectors>
 	<Injectors target="{newTeamTW}">
 		<PropertyInjector targetKey="tournamentListData" source="{TournamentManager}" sourceKey="tournamentListData"/>
 		<PropertyInjector targetKey="divisionListData" source="{ListsManager}" sourceKey="divisionListData"/>
 		<PropertyInjector targetKey="countryListData" source="{ListsManager}" sourceKey="countryListData"/>
+	</Injectors>
+<!-- GAME -->
+	<Injectors target="{selectTournamentTW}">
+		<PropertyInjector targetKey="tournamentListData" source="{TournamentManager}" sourceKey="tournamentListData"/>
+	</Injectors>
+	<Injectors target="{gamePage}">
+		<PropertyInjector targetKey="gamesListData" source="{GameManager}" sourceKey="gamesListData"/>
+		<PropertyInjector targetKey="tournamentTitle" source="{GameManager}" sourceKey="tournamentTitle"/>
+	</Injectors>
+	<Injectors target="{newGameTW}">
+		<PropertyInjector targetKey="divisionListData" source="{ListsManager}" sourceKey="divisionListData"/>
+		<PropertyInjector targetKey="countryListData" source="{ListsManager}" sourceKey="countryListData"/>
+		<PropertyInjector targetKey="gameTypeListData" source="{ListsManager}" sourceKey="gameTypeListData"/>
+		<PropertyInjector targetKey="tournamentKey" source="{GameManager}" sourceKey="tournamentKey"/>
+		<PropertyInjector targetKey="blackTeamListData" source="{GameManager}" sourceKey="blackTeamListData"/>
+		<PropertyInjector targetKey="whiteTeamListData" source="{GameManager}" sourceKey="whiteTeamListData"/>
 	</Injectors>
 
 	

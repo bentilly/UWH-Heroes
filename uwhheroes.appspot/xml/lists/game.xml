@@ -1,0 +1,6 @@
+<tournament name="{{ tournament.name|escape }}" key="{{ tournament.key }}" />
+<games>
+	{% for game in tournament.game_set %}
+		<game division="{{ divisio.name|escape }}"/>
+	{% endfor %}
+</games>

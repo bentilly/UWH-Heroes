@@ -4,10 +4,12 @@
 	width="100%" height="100%"
 	horizontalCenter="0"
 	verticalCenter="0"
-	xmlns:view="view.*" xmlns:intro="view.intro.*" xmlns:mate="http://mate.asfusion.com/" xmlns:lists="view.lists.*" xmlns:person="view.person.*" xmlns:tournament="view.tournament.*" xmlns:team="view.team.*">
+	xmlns:view="view.*" xmlns:intro="view.intro.*" xmlns:mate="http://mate.asfusion.com/" xmlns:lists="view.lists.*" xmlns:person="view.person.*" xmlns:tournament="view.tournament.*" xmlns:team="view.team.*" xmlns:game="view.game.*">
 
 	<mx:Script>
 		<![CDATA[
+			import mx.managers.PopUpManager;
+			import view.game.selectTournamentTW;
 			import events.UIEvent;
 			
 			private function switchStack(e:UIEvent):void{
@@ -32,6 +34,10 @@
 						dispatchEvent(uie);
 						break;
 					case 3: //team page
+						uie = new UIEvent(UIEvent.RESET_PAGES)
+						dispatchEvent(uie);
+						uie = new UIEvent(UIEvent.GET_TEAMS);
+						dispatchEvent(uie);
 						uie = new UIEvent(UIEvent.FIND_PERSON);
 						uie.firstName = "";
 						uie.lastName = "";
@@ -53,27 +59,46 @@
 						uie.whichList = "rank";
 						dispatchEvent(uie);
 						break;
-					case 4:
+					case 4: //Game page
+						uie = new UIEvent(UIEvent.FIND_TOURNAMENT);
+						uie.name = "";
+						uie.city = "";
+						dispatchEvent(uie);
+						//country
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "country";
+						dispatchEvent(uie);
+						//division
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "division";
+						dispatchEvent(uie);
+						//game type
+						uie = new UIEvent(UIEvent.GET_LIST);
+						uie.whichList = "gameType";
+						dispatchEvent(uie);
+						var selectTournyWindow:selectTournamentTW = selectTournamentTW(PopUpManager.createPopUp(this, selectTournamentTW, true));
+						break;
+					case 5:
 						uie = new UIEvent(UIEvent.GET_LIST);
 						uie.whichList = "country";
 						dispatchEvent(uie);
 						break;
-					case 5:
+					case 6:
 						uie = new UIEvent(UIEvent.GET_LIST);
 						uie.whichList = "division";
 						dispatchEvent(uie);
 						break;
-					case 6:
+					case 7:
 						uie = new UIEvent(UIEvent.GET_LIST);
 						uie.whichList = "gameType";
 						dispatchEvent(uie);
 						break;
-					case 7:
+					case 8:
 						uie = new UIEvent(UIEvent.GET_LIST);
 						uie.whichList = "position";
 						dispatchEvent(uie);
 						break;
-					case 8:
+					case 9:
 						uie = new UIEvent(UIEvent.GET_LIST);
 						uie.whichList = "rank";
 						dispatchEvent(uie);
@@ -98,6 +123,7 @@
 			<person:personPage/>
 			<tournament:tournamentPage/>
 			<team:teamPage/>
+			<game:gamePage/>
 			<lists:countryList/>
 			<lists:divisionList/>
 			<lists:gameTypeList/>

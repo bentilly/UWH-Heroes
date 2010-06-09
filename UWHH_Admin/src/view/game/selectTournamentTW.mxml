@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" 
+	height="500"
+	title="Select Tournament"
+	showCloseButton="true"
+	close="PopUpManager.removePopUp(this)"
+	creationComplete="init()"
+	modalTransparencyColor="#000000"
+	>
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import events.UIEvent;
+			import mx.managers.PopUpManager;
+			
+			[Bindable] public var tournamentListData:Array;
+			
+			private function init():void{
+				PopUpManager.centerPopUp(this);
+			}
+			private function selectTourney():void{
+				var uie:UIEvent = new UIEvent(UIEvent.SELECT_TOURNEY);
+				uie.tournamentKey = tournamentDG.selectedItem.key;
+				dispatchEvent(uie);
+				PopUpManager.removePopUp(this);
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox height="100%">
+		<mx:DataGrid id="tournamentDG" dataProvider="{tournamentListData}" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn dataField="year" headerText="Year" width="80"/>
+				<mx:DataGridColumn dataField="name" headerText="Tournament Name" width="150"/>
+				<mx:DataGridColumn dataField="city" headerText="City" width="150"/>
+				<mx:DataGridColumn dataField="country" headerText="Country" width="150"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:Button label="Select Tournment" click="selectTourney()"/>
+	</mx:VBox>
+	
+	
+	
+</mx:TitleWindow>

@@ -31,7 +31,9 @@
 		</mx:DataGrid>
 		<mx:VBox paddingTop="10">
 			<mx:Label text="Team Rank" fontWeight="bold" fontSize="16"/>
+			<mx:Label text="Rank Name"/>
 			<mx:TextInput id="nameTI" text="Team Rank name"/>
+			<mx:Label text="Rank Code"/>
 			<mx:TextInput id="codeTI" text="Team Rank Code"/>
 			<mx:Button label="Add Team Rank" click="addRank()"/>
 		</mx:VBox>

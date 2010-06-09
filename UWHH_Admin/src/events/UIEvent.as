@@ -18,12 +18,37 @@ package events
 		public static const SAVE_TOURNAMENT:String = "saveTournamentEvent";
 		
 		public static const ADD_TEAM:String = "addTeamEvent";
+		public static const GET_TEAMS:String = "getTeamsEvent";
+		public static const GET_TEAM_PLAYERS:String = "getTeamPlayersEvent";
+		public static const SAVE_TEAM_PLAYER:String = "saveTeamPlayerEvent";
+		public static const SAVE_TEAM_OFFICIAL:String = "saveTeamOfficialEvent";
+		public static const ADD_PERSON_TO_TEAM:String = "addPersonToTeamEvent";
+		public static const ADD_COACH_TO_TEAM:String = "addCoachToTeamEvent";
+		public static const ADD_OFFICIAL_TO_TEAM:String = "addOfficialToTeamEvent";
+		
+		public static const RESET_PAGES:String = "resetPagesEvent";
+		
+	// GAMES
+		public static const SELECT_TOURNEY:String = "selectTourneyEvent";
+		public static const GET_TEAMS_FOR_TOURNEY:String = "getTeamsForTourneyEvent";
+		
+		
+		public var key:String;
+		public var personKey:String;
+		public var teamKey:String;
+		public var positionKey:String;
+		public var rankKey:String;
+		public var tournamentKey:String;
+		public var divisionKey:String;
+		public var countryKey:String;
+		
 		
 		public var stackIndex:int;
 		public var whichList:String;
 		
 		public var name:String;
 		public var code:String;
+		public var title:String;
 		
 		public var firstName:String;
 		public var lastName:String;
@@ -32,8 +57,8 @@ package events
 		public var tournament:String;
 		public var division:String;
 		public var dateString:String;
-		public var key:String;
 		
+		public var team:String;
 		
 		public function UIEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false)
 		{

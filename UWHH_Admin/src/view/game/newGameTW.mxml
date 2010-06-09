@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" 
+	title="New Game"
+	showCloseButton="true"
+	close="PopUpManager.removePopUp(this)"
+	creationComplete="init()"
+	modalTransparencyColor="#000000"
+	>
+	<mx:Script>
+		<![CDATA[
+			import events.UIEvent;
+			import mx.managers.PopUpManager;
+			
+		/*** IMPORT ***/
+			[Bindable] public var divisionListData:Object;
+			[Bindable] public var countryListData:Object;
+			[Bindable] public var gameTypeListData:Object;
+			[Bindable] public var tournamentKey:String;
+			[Bindable] public var blackTeamListData:Object;
+			[Bindable] public var whiteTeamListData:Object;
+			
+			
+			private function init():void{
+				PopUpManager.centerPopUp(this);
+			}
+			private function saveGame():void{
+				
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="100%" height="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" verticalGap="10">
+		<mx:Label text="Game Info" fontWeight="bold" fontSize="15"/>
+		<mx:HBox>
+			<mx:VBox>
+				<mx:Label text="Division"/>
+				<mx:ComboBox id="gameDivisionCB" dataProvider="{divisionListData.item}" labelField="name"/>
+			</mx:VBox>
+			<mx:VBox>
+				<mx:Label text="Game Type"/>
+				<mx:ComboBox id="gameGameTypeCB" dataProvider="{gameTypeListData.item}" labelField="name"/>
+			</mx:VBox>
+			<mx:VBox>
+				<mx:Label text="Date"/>
+				<mx:DateField id="gameDateDF"/>
+			</mx:VBox>
+			<mx:VBox horizontalAlign="center">
+				<mx:Label text="TestMatch"/>
+				<mx:CheckBox id="testMatchCB"/>
+			</mx:VBox>
+		</mx:HBox>
+		
+		<mx:HBox borderStyle="solid" borderSides="top, bottom" width="100%" horizontalGap="10">
+			<mx:VBox width="100%"  borderStyle="solid" borderSides="right"
+				paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+				<mx:Label text="Black Team" fontWeight="bold" fontSize="15"/>
+				<mx:Label text="Score"/>
+				<mx:NumericStepper/>
+				<mx:Label text="Country"/>
+				<mx:ComboBox id="blackCountryCB" dataProvider="{countryListData.item}" labelField="name"/>
+				<mx:Label text="Division"/>
+				<mx:ComboBox id="blackDivisionCB" dataProvider="{divisionListData.item}" labelField="name"/>
+			</mx:VBox>
+			<mx:VBox width="100%"
+				paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+				<mx:Label text="White Team" fontWeight="bold" fontSize="15"/>
+				<mx:Label text="Score"/>
+				<mx:NumericStepper/>
+				<mx:Label text="Country"/>
+				<mx:ComboBox id="whiteCountryCB" dataProvider="{countryListData.item}" labelField="name"/>
+				<mx:Label text="Division"/>
+				<mx:ComboBox id="whiteDivisionCB" dataProvider="{divisionListData.item}" labelField="name"/>
+			</mx:VBox>
+		</mx:HBox>
+		<mx:Button label="Save Game" click="saveGame()"/>
+	</mx:VBox>
+	
+	
+</mx:TitleWindow>

@@ -17,19 +17,8 @@
 			[Bindable] public var countryListData:Object;
 			[Bindable] public var divisionListData:Object;
 			
-			private var autoName:Boolean = true;
-			
 			private function init():void{
 				PopUpManager.centerPopUp(this);
-			}
-			
-			private function lockName():void{
-				autoName = false;
-			}
-			private function setName():void{
-				if(autoName){
-					teamName.text = tournamentDG.selectedItem.year + " " + countryCB.selectedItem.name + " " + divisionCB.selectedItem.name;
-				}
 			}
 			
 			private function createTeam():void{
@@ -51,7 +40,7 @@
 	</mx:Script>
 	
 	<mx:HBox width="100%" height="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
-		<mx:DataGrid id="tournamentDG" dataProvider="{tournamentListData}" height="100%" itemClick="setName()">
+		<mx:DataGrid id="tournamentDG" dataProvider="{tournamentListData}" height="100%">
 			<mx:columns>
 				<mx:DataGridColumn dataField="year" headerText="Year" width="80"/>
 				<mx:DataGridColumn dataField="name" headerText="Tournament Name" width="150"/>
@@ -61,12 +50,12 @@
 		
 		<mx:VBox width="100%" height="100%">
 			<mx:Label text="Country:" fontWeight="bold"/>
-			<mx:ComboBox id="countryCB" dataProvider="{countryListData.item}" labelField="name" change="setName()"/>
+			<mx:ComboBox id="countryCB" dataProvider="{countryListData.item}" labelField="name"/>
 			<mx:Label text="Division" fontWeight="bold"/>
-			<mx:ComboBox id="divisionCB" dataProvider="{divisionListData.item}" labelField="name" change="setName()"/>
+			<mx:ComboBox id="divisionCB" dataProvider="{divisionListData.item}" labelField="name"/>
 			<mx:Spacer height="100%"/>
-			<mx:Label text="Name" fontWeight="bold"/>
-			<mx:TextInput id="teamName" change="lockName()"/>
+			<mx:Label text="Name (optinal)" fontWeight="bold"/>
+			<mx:TextInput id="teamName"/>
 			<mx:Button label="Create Team" click="createTeam()"/>
 		</mx:VBox>
 	</mx:HBox>

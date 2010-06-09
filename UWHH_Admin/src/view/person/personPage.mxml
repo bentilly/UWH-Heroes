@@ -90,19 +90,6 @@
 				<mx:Label text="Person" fontWeight="bold" fontSize="16"/>
 				
 				<mx:VBox borderStyle="solid" borderSides="bottom" width="100%">
-					<mx:Label text="Find" fontWeight="bold" fontSize="14"/>
-					<mx:HBox width="100%">
-						<mx:Label text="First name:" width="60"/>
-						<mx:TextInput id="firstNameFind" change="findPerson(true)"/>
-					</mx:HBox>
-					<mx:HBox width="100%">
-						<mx:Label text="Last name:" width="60"/>
-						<mx:TextInput id="lastNameFind" change="findPerson(false)"/>
-					</mx:HBox>
-					<mx:Spacer height="8"/>
-				</mx:VBox>
-				
-				<mx:VBox borderStyle="solid" borderSides="bottom" width="100%">
 					<mx:Label text="New" fontWeight="bold" fontSize="14"/>
 					<mx:HBox width="100%">
 						<mx:Label text="First name:" width="60"/>
@@ -115,6 +102,20 @@
 					<mx:Button label="Add Person" click="addPerson()"/>
 					<mx:Spacer height="8"/>
 				</mx:VBox>
+				
+				<mx:VBox borderStyle="solid" borderSides="bottom" width="100%">
+					<mx:Label text="Find" fontWeight="bold" fontSize="14"/>
+					<mx:HBox width="100%">
+						<mx:Label text="First name:" width="60"/>
+						<mx:TextInput id="firstNameFind" change="findPerson(true)"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="Last name:" width="60"/>
+						<mx:TextInput id="lastNameFind" change="findPerson(false)"/>
+					</mx:HBox>
+					<mx:Spacer height="8"/>
+				</mx:VBox>
+				
 				
 				
 				

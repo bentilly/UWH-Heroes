@@ -27,22 +27,6 @@
 				nameNew.text = "";
 				cityNew.text = "";
 			}
-			//Limited number of Tournaments. Should be easy to find by sorting the list
-			/* private function findTournament(useName:Boolean):void{
-				currentState = ""
-				var uie:UIEvent = new UIEvent(UIEvent.FIND_TOURNAMENT);
-				if(useName){
-					uie.name = nameFind.text;
-					uie.city = "";
-					cityFind.text = "";
-				}else{
-					uie.name = "";
-					uie.city = cityFind.text;
-					nameFind.text = "";
-				}
-				
-				dispatchEvent(uie);
-			} */
 			private function showTournament():void{
 				currentState = "ShowTournamentState"
 				tname = tournamentDG.selectedItem.name;

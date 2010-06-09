@@ -1,0 +1,28 @@
+<team>
+	<teamPlayers>
+		{% for p in players %}
+			<player 
+				firstName="{{ p.person.firstName|escape }}"
+				lastName="{{ p.person.lastName|escape }}"
+				rank="{{ p.rank.name|escape }}"
+				position="{{ p.position.name|escape }}"
+				key="{{ p.key }}"
+			/>
+		{% endfor %}
+	</teamPlayers>
+	
+	<teamCoach>
+		<coach firstName="{{ coach.firstName|escape }}" lastName="{{ coach.lastName|escape }}" key="{{ coach.key }}"/>
+	</teamCoach>
+	
+	<teamOfficials>
+		{% for o in officials %}
+			<official 
+				firstName="{{ o.person.firstName|escape }}"
+				lastName="{{ o.person.lastName|escape }}"
+				title="{{ o.title|escape }}"
+				key="{{ o.key }}"
+			/>
+		{% endfor %}
+	</teamOfficials>
+</team>

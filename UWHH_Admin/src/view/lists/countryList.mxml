@@ -31,7 +31,9 @@
 		</mx:DataGrid>
 		<mx:VBox paddingTop="10">
 			<mx:Label text="Countries" fontWeight="bold" fontSize="16"/>
+			<mx:Label text="Country Name"/>
 			<mx:TextInput id="nameTI" text="Country name"/>
+			<mx:Label text="Country Code (3 letters)"/>
 			<mx:TextInput id="codeTI" text="Country Code"/>
 			<mx:Button label="Add Country" click="addCountry()"/>
 		</mx:VBox>

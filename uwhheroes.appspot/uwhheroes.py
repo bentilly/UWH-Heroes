@@ -10,6 +10,7 @@ from python.lists import *
 from python.person import *
 from python.tournament import *
 from python.team import *
+from python.game import *
 
 class Main(webapp.RequestHandler):
     def get(self):
@@ -22,6 +23,7 @@ application = webapp.WSGIApplication([
                                      ('/getList', GetList),
                                      ('/addToList', AddToList),
                                      #Person
+                                     ('/getAllPeople', GetAllPeople),
                                      ('/addPerson', AddPerson),
                                      ('/findPerson', FindPerson),
                                      ('/savePerson', SavePerson),
@@ -31,6 +33,16 @@ application = webapp.WSGIApplication([
                                      ('/saveTournament', SaveTournament),
                                      #Team
                                      ('/addTeam', AddTeam),
+                                     ('/getTeams', GetTeams), 
+                                     ('/getTeamPlayers', GetTeamPlayers),                                   
+                                     ('/addPersonToTeam', AddPersonToTeam),
+                                     ('/addCoachToTeam', AddCoachToTeam),
+                                     ('/addOfficialToTeam', AddOfficialToTeam),
+                                     ('/saveTeamPlayer', SaveTeamPlayer),
+                                     ('/saveTeamOfficial', SaveTeamOfficial),
+                                     #Game
+                                     ('/getGamesForTourney', GetGamesForTourney),
+                                     ('/getTeamsForTourney', GetTeamsForTourney),
                                      
                                      
                                      

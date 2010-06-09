@@ -134,8 +134,111 @@
 		</HTTPServiceInvoker>
 	</EventHandlers>
 	
+	<EventHandlers type="{UIEvent.GET_TEAMS}" debug="true">
+		<HTTPServiceInvoker instance="{services.getTeamsService}" debug="true">
+			<resultHandlers>
+				<MethodInvoker generator="{TeamManager}" method="updateList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
 	
+	<EventHandlers type="{UIEvent.GET_TEAM_PLAYERS}" debug="true">
+		<HTTPServiceInvoker instance="{services.getTeamPlayersService}" debug="true">
+			<Request 
+				teamKey="{event.teamKey}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TeamManager}" method="updateCurrentTeamList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
 	
+	<EventHandlers type="{UIEvent.ADD_PERSON_TO_TEAM}" debug="true">
+		<HTTPServiceInvoker instance="{services.addPersonToTeamService}" debug="true">
+			<Request 
+				personKey="{event.personKey}"
+				teamKey="{event.teamKey}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TeamManager}" method="updateCurrentTeamList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{UIEvent.ADD_COACH_TO_TEAM}" debug="true">
+		<HTTPServiceInvoker instance="{services.addCoachToTeamService}" debug="true">
+			<Request 
+				personKey="{event.personKey}"
+				teamKey="{event.teamKey}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TeamManager}" method="updateCurrentTeamList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{UIEvent.ADD_OFFICIAL_TO_TEAM}" debug="true">
+		<HTTPServiceInvoker instance="{services.addOfficialToTeamService}" debug="true">
+			<Request 
+				personKey="{event.personKey}"
+				teamKey="{event.teamKey}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TeamManager}" method="updateCurrentTeamList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{UIEvent.SAVE_TEAM_PLAYER}" debug="true">
+		<HTTPServiceInvoker instance="{services.saveTeamPlayerService}" debug="true">
+			<Request 
+				key="{event.key}"
+				positionKey="{event.positionKey}"
+				rankKey="{event.rankKey}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TeamManager}" method="updateCurrentTeamList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{UIEvent.SAVE_TEAM_OFFICIAL}" debug="true">
+		<HTTPServiceInvoker instance="{services.saveTeamOfficialService}" debug="true">
+			<Request 
+				key="{event.key}"
+				title="{event.title}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{TeamManager}" method="updateCurrentTeamList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+
+<!-- GAME ____________________________ -->
+	
+	<EventHandlers type="{UIEvent.SELECT_TOURNEY}" debug="true">
+		<HTTPServiceInvoker instance="{services.getGamesForTourneyService}" debug="true">
+			<Request 
+				tournamentKey="{event.tournamentKey}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{GameManager}" method="updateGameList" arguments="{resultObject}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
+	
+	<EventHandlers type="{UIEvent.GET_TEAMS_FOR_TOURNEY}" debug="true">
+		<HTTPServiceInvoker instance="{services.getTeamsForTourneyService}" debug="true">
+			<Request 
+				tournamentKey="{event.tournamentKey}"
+				divisionKey="{event.divisionKey}"
+				countryKey="{event.countryKey}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{GameManager}" method="updateTourneyTeamList" arguments="{[resultObject, event]}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
 	
 	
 	

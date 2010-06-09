@@ -1,5 +1,12 @@
 <teams>
 	{% for t in teams %}
-		<team name="{{ t.name|escape }}" country="{{ t.country.name|escape }}" division="{{ t.division.name|escape }}" key="{{ t.key }}"/>
+		<team 
+		teamid="{{ t.tournament.startDate|date:"Y" }} {{ t.country.code|escape }} {{ t.division.code|escape }}" 
+		fullName="{{ t.country.name|escape }} {{ t.division.name|escape }} {{ t.name|escape }}" 
+		name="{{ t.name|escape }}" 
+		tournamentName="{{ t.tournament.startDate|date:"Y" }} {{ t.tournament.name|escape }}, {{ t.tournament.city|escape }} {{ t.tournament.country.code|escape }}"
+		country="{{ t.country.name|escape }}" 
+		division="{{ t.division.name|escape }}" 
+		key="{{ t.key }}"/>
 	{% endfor %}
 </teams>
