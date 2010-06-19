@@ -1,6 +1,14 @@
 <tournament name="{{ tournament.name|escape }}" key="{{ tournament.key }}" />
 <games>
 	{% for game in tournament.game_set %}
-		<game division="{{ divisio.name|escape }}"/>
+		<game 
+			division="{{ game.division.name|escape }}"
+			gameType="{{ game.gameType.name|escape }}"
+			{% for gameTeam in game.gameTeam_set %}
+				{% if gameTeam.colour == "black" %}
+					blackTeam="{{ gameTeam.team.country.name|escape }} {{ gameTeam.team.division.name|escape }}"
+				{% endif %}
+			{% endfor %}
+			/>
 	{% endfor %}
 </games>

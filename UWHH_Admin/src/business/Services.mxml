@@ -30,6 +30,7 @@
 	<!-- GAME -->
 	<mx:HTTPService id="getGamesForTourneyService" url="{URLPrefix+'/getGamesForTourney'}" method="POST"/>
 	<mx:HTTPService id="getTeamsForTourneyService" url="{URLPrefix+'/getTeamsForTourney'}" method="POST"/>
+	<mx:HTTPService id="newGameService" url="{URLPrefix+'/newGame'}" method="POST"/>
 
 
 </Object>

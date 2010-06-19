@@ -24,7 +24,19 @@
 				PopUpManager.centerPopUp(this);
 			}
 			private function saveGame():void{
-				
+				var uie:UIEvent = new UIEvent(UIEvent.NEW_GAME);
+				uie.tournamentKey = tournamentKey;
+				uie.gameDate = gameDateDF.selectedDate.getDate() + "-" +(gameDateDF.selectedDate.getMonth()+1)+ "-" +gameDateDF.selectedDate.getFullYear();
+				uie.gameDivision = gameDivisionCB.selectedItem.key;
+				uie.gameType = gameGameTypeCB.selectedItem.key;
+				uie.testMatch = testMatchCB.selected;
+				uie.bscore = bScore.value;
+				uie.bCountry = blackCountryCB.selectedItem.key;
+				uie.bDivision = blackDivisionCB.selectedItem.key;
+				uie.wscore = bScore.value;
+				uie.wCountry = whiteCountryCB.selectedItem.key;
+				uie.wDivision = whiteDivisionCB.selectedItem.key;
+				dispatchEvent(uie);
 			}
 			
 		]]>
@@ -43,7 +55,7 @@
 			</mx:VBox>
 			<mx:VBox>
 				<mx:Label text="Date"/>
-				<mx:DateField id="gameDateDF"/>
+				<mx:DateField id="gameDateDF" selectedDate="{new Date(2000, 0, 1)}" formatString="DD/MM/YYYY"/>
 			</mx:VBox>
 			<mx:VBox horizontalAlign="center">
 				<mx:Label text="TestMatch"/>
@@ -56,7 +68,7 @@
 				paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
 				<mx:Label text="Black Team" fontWeight="bold" fontSize="15"/>
 				<mx:Label text="Score"/>
-				<mx:NumericStepper/>
+				<mx:NumericStepper id="bScore"/>
 				<mx:Label text="Country"/>
 				<mx:ComboBox id="blackCountryCB" dataProvider="{countryListData.item}" labelField="name"/>
 				<mx:Label text="Division"/>
@@ -66,7 +78,7 @@
 				paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
 				<mx:Label text="White Team" fontWeight="bold" fontSize="15"/>
 				<mx:Label text="Score"/>
-				<mx:NumericStepper/>
+				<mx:NumericStepper id="wScore"/>
 				<mx:Label text="Country"/>
 				<mx:ComboBox id="whiteCountryCB" dataProvider="{countryListData.item}" labelField="name"/>
 				<mx:Label text="Division"/>

@@ -31,6 +31,7 @@ package events
 	// GAMES
 		public static const SELECT_TOURNEY:String = "selectTourneyEvent";
 		public static const GET_TEAMS_FOR_TOURNEY:String = "getTeamsForTourneyEvent";
+		public static const NEW_GAME:String = "newGameEvent";
 		
 		
 		public var key:String;
@@ -59,6 +60,21 @@ package events
 		public var dateString:String;
 		
 		public var team:String;
+		
+		//Games
+		public var gameDate:String;
+		public var gameDivision:String;
+		public var gameType:String;
+		public var testMatch:Boolean;
+		public var bscore:Number;
+		public var bCountry:String;
+		public var bDivision:String;
+		public var wscore:Number;
+		public var wCountry:String;
+		public var wDivision:String;
+		
+		
+		
 		
 		public function UIEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false)
 		{

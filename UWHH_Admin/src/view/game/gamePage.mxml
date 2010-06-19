@@ -32,7 +32,10 @@
 	<mx:HBox height="100%">
 		<mx:DataGrid id="gamesDG" dataProvider="{gamesListData.game}" height="100%">
 			<mx:columns>
-				<mx:DataGridColumn dataField="division" headerText="Games"/>
+				<mx:DataGridColumn dataField="gameType" headerText="Game Type"/>
+				<mx:DataGridColumn dataField="division" headerText="Division"/>
+				<mx:DataGridColumn dataField="blackTeam" headerText="Black"/>
+				<mx:DataGridColumn dataField="whiteTeam" headerText="White"/>
 			</mx:columns>
 		</mx:DataGrid>
 		

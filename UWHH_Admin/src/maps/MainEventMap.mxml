@@ -240,7 +240,26 @@
 		</HTTPServiceInvoker>
 	</EventHandlers>
 	
-	
+	<EventHandlers type="{UIEvent.NEW_GAME}" debug="true">
+		<HTTPServiceInvoker instance="{services.newGameService}" debug="true">
+			<Request 
+				tournamentKey = "{event.tournamentKey}"
+				gameDate = "{event.gameDate}"
+				gameDivision = "{event.gameDivision}"
+				gameType = "{event.gameType}"
+				testMatch = "{event.testMatch}"
+				bscore = "{event.bscore}"
+				bCountry = "{event.bCountry}"
+				bDivision = "{event.bDivision}"
+				wscore = "{event.wscore}"
+				wCountry = "{event.wCountry}"
+				wDivision = "{event.wDivision}"
+				/>
+			<resultHandlers>
+				<MethodInvoker generator="{GameManager}" method="newGameResponse" arguments="{[resultObject, event]}"/>
+			</resultHandlers>
+		</HTTPServiceInvoker>
+	</EventHandlers>
 	
 	
 	

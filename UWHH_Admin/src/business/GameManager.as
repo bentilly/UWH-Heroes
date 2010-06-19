@@ -20,14 +20,18 @@ package business{
 			tournamentKey = result.tournament.key;
 		}
 		public function updateTourneyTeamList(result:Object, event:UIEvent):void{
-			trace("GOT SOME STUFF");
+			
 			if(event.team == "black"){
 				blackTeamListData = result.teams;
 			}else{
 				whiteTeamListData = result.teams;
 			}
 		}
-		
+		public function newGameResponse(result:Object, event:UIEvent):void{
+			trace("_________________");
+			trace(result.response);
+			trace("_________________");
+		}
 
 	}
 }

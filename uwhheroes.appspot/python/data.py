@@ -50,7 +50,7 @@ class Game(db.Model):
 	tournament = db.ReferenceProperty(Tournament, collection_name='game_set')
 	division = db.ReferenceProperty(Division)
 	gameType = db.ReferenceProperty(GameType)
-	startDateTime = db.DateTimeProperty()
+	startDate = db.DateProperty()
 	testMatch = db.BooleanProperty()
 	
 class GameTeam(db.Model):

@@ -1,0 +1,101 @@
+---------------------------------------------------------------------
+Transfer EVERYTHING. This can only be used as a backup / full restore
+---------------------------------------------------------------------
+
+Download:
+bulkloader.py --dump --app_id=uwhheroes --url=http://uwhheroes.appspot.com/remote_api --filename=datadump
+
+Restore:
+bulkloader.py --restore --app_id=uwhheroes --url=http://uwhheroes.appspot.com/remote_api --filename=uwhheroesDump
+
+
+
+---------------------------------------------------------------------
+Create the bulkloader.yaml configuration file
+---------------------------------------------------------------------
+
+appcfg.py create_bulkloader_config --url=http://uwhheroes.appspot.com/remote_api --filename=bulkloader.yaml
+
+
+---------------------------------------------------------------------
+Download data from the datastore. One KIND at a time
+Make sure to be in the same directory as the bulkloader.yaml file, or specify full file paths
+---------------------------------------------------------------------
+:::Person
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/person.csv --kind=Person --url=http://uwhheroes.appspot.com/remote_api
+:::Country
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/country.csv --kind=Country --url=http://uwhheroes.appspot.com/remote_api
+:::Division:
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/division.csv --kind=Division --url=http://uwhheroes.appspot.com/remote_api
+:::GameType:
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/gameType.csv --kind=GameType --url=http://uwhheroes.appspot.com/remote_api
+:::Position:
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/position.csv --kind=Position --url=http://uwhheroes.appspot.com/remote_api
+:::Rank:
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/rank.csv --kind=Rank --url=http://uwhheroes.appspot.com/remote_api
+:::Team:
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/team.csv --kind=Team --url=http://uwhheroes.appspot.com/remote_api
+:::Team_Official:
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/team_Official.csv --kind=Team_Official --url=http://uwhheroes.appspot.com/remote_api
+:::Team_Player:
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/team_Player.csv --kind=Team_Player --url=http://uwhheroes.appspot.com/remote_api
+:::Tournament:
+appcfg.py download_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/tournament.csv --kind=Tournament --url=http://uwhheroes.appspot.com/remote_api
+
+
+
+---------------------------------------------------------------------
+Upload data to the datastore. One KIND at a time
+Make sure to be in the same directory as the bulkloader.yaml file, or specify full file paths
+---------------------------------------------------------------------
+
+PERSON
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/people.csv --kind=Person --url=http://uwhheroes.appspot.com/remote_api
+
+
+---------------------------------------------------------------------
+Upload data to the DEVELOPMENT datastore. One KIND at a time
+-- Make sure to be in the same directory as the bulkloader.yaml file, or specify full file paths
+-- You have to upload in this order so the __key__ lines up
+-- You can use your COMPUTERS login details to authenticate
+---------------------------------------------------------------------
+:::Person
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/person.csv --kind=Person --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::Country
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/country.csv --kind=Country --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::Division:
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/division.csv --kind=Division --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::GameType:
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/gameType.csv --kind=GameType --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::Position:
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/position.csv --kind=Position --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::Rank:
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/rank.csv --kind=Rank --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::Tournament:
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/tournament.csv --kind=Tournament --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::Team:
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/team.csv --kind=Team --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::Team_Official:
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/team_Official.csv --kind=Team_Official --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+:::Team_Player:
+appcfg.py upload_data --config_file=uwhheroes/uwhheroes.appspot/bulkloader.yaml --filename=dataTransfer/team_Player.csv --kind=Team_Player --url=http://localhost:8088/remote_api uwhheroes/uwhheroes.appspot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -43,7 +43,7 @@ application = webapp.WSGIApplication([
                                      #Game
                                      ('/getGamesForTourney', GetGamesForTourney),
                                      ('/getTeamsForTourney', GetTeamsForTourney),
-                                     
+                                     ('/newGame', NewGame),
                                      
                                      
                                      ], debug=True)
